@@ -1,13 +1,15 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Post,
+  Param,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiParam } from '@nestjs/swagger';
 import { CloudinaryService } from 'src/cloudinary.module/cloudinary.service';
 import { FitnessDto } from '../dto/fitnes.dto';
 import { FitnessService } from '../services/fitness.service';
@@ -43,5 +45,16 @@ export class FitnessController {
   @Get()
   findAllFitness() {
     return this.fitnessService.getAllFitness();
+  }
+
+  @Delete()
+  deleteAllFitness() {
+    return this.fitnessService.deleteAllFitness();
+  }
+
+  @Delete(':id')
+  @ApiParam({ name: 'id' })
+  deleteFitness(@Param() params) {
+    return this.fitnessService.deleteFitness(params.id);
   }
 }

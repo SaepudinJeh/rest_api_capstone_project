@@ -14,7 +14,18 @@ export class FitnessService {
     const createFitness = new this.fitnessModel(fitnessDto);
     return await createFitness.save();
   }
+
   async getAllFitness(): Promise<Fitness[]> {
     return await this.fitnessModel.find().exec();
+  }
+
+  async deleteAllFitness(): Promise<string> {
+    await this.fitnessModel.deleteMany().exec();
+    return 'Delete All Fitness successfully';
+  }
+
+  async deleteFitness(id: any): Promise<string> {
+    await this.fitnessModel.findByIdAndDelete(id);
+    return 'Delete Fitness Successfully!';
   }
 }
