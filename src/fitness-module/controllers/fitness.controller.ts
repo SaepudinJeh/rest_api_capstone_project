@@ -7,6 +7,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBody, ApiConsumes } from '@nestjs/swagger';
 import { CloudinaryService } from 'src/cloudinary.module/cloudinary.service';
 import { FitnessDto } from '../dto/fitnes.dto';
 import { FitnessService } from '../services/fitness.service';
@@ -19,7 +20,12 @@ export class FitnessController {
   ) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('image'))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'Body Payload Create Fitness',
+    type: FitnessDto,
+  })
   async createFitness(
     @Body() fitnessDto: FitnessDto,
     @UploadedFile() file: Express.Multer.File,

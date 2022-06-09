@@ -1,6 +1,6 @@
 export interface FitnessImpl {
   getFitnessById(): void;
-  getAllFitness();
+  getAllFitness(): void;
   updateFitness(): void;
   deleteFitness(): void;
 }
