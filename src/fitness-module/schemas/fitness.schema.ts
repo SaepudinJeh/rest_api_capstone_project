@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type FitnessDocument = Fitness & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Fitness {
   @Prop({ required: true })
   name: string;
