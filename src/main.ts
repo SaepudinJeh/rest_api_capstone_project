@@ -2,14 +2,18 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import * as compression from 'compression';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.use(compression());
+
   const configSwagger = new DocumentBuilder()
+    .addServer('http://localhost:3000')
     .setTitle('Fitness API')
     .setDescription('The API Fitness')
-    .setVersion('0.0.1')
+    .setVersion('1.0.1')
     .addTag('Fitness', 'API')
     .build();
 

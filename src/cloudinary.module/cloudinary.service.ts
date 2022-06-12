@@ -14,7 +14,7 @@ export class CloudinaryService {
         resolve(result);
       });
 
-      toStream(file.buffer).pipe(upload);
+      toStream(file?.buffer)?.pipe(upload);
     });
   }
 }
