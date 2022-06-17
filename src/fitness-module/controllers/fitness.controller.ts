@@ -12,11 +12,11 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiOperation, ApiParam } from '@nestjs/swagger';
-import { Response } from 'express';
 import { CloudinaryService } from 'src/cloudinary.module/cloudinary.service';
 import { FitnessDto } from '../dto/fitnes.dto';
 import { UpdateFitnessDto } from '../dto/update.fitness.dto';
 import { FitnessService } from '../services/fitness.service';
+import { Express } from 'express';
 
 @Controller('/api/v1/fitness')
 export class FitnessController {
