@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Fitness, FitnessDocument } from '../schemas/fitness.schema';
 import { FitnessDto } from '../dto/fitnes.dto';
 import { UpdateFitnessDto } from '../dto/update.fitness.dto';
+// import { Response } from 'express';
 
 @Injectable()
 export class FitnessService {
@@ -17,7 +18,7 @@ export class FitnessService {
   }
 
   async getAllFitness(): Promise<Fitness[]> {
-    return await this.fitnessModel.find().exec();
+    return await this.fitnessModel.find({}).exec();
   }
 
   async deleteAllFitness(): Promise<string> {
@@ -40,5 +41,9 @@ export class FitnessService {
 
   async findFitness(id: any): Promise<Fitness> {
     return await this.fitnessModel.findById(id);
+  }
+
+  async getFintessRecommendation(): Promise<Fitness[]> {
+    return await this.fitnessModel.find({})
   }
 }

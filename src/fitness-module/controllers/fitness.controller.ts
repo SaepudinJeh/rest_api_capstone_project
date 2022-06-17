@@ -12,6 +12,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiOperation, ApiParam } from '@nestjs/swagger';
+import { Response } from 'express';
 import { CloudinaryService } from 'src/cloudinary.module/cloudinary.service';
 import { FitnessDto } from '../dto/fitnes.dto';
 import { UpdateFitnessDto } from '../dto/update.fitness.dto';
@@ -25,9 +26,9 @@ export class FitnessController {
   ) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create Fitness Data' })
   @UseInterceptors(FileInterceptor('image'))
   @ApiConsumes('multipart/form-data')
-  @ApiOperation({ summary: 'Create Fitness Data' })
   @ApiBody({
     description: 'Body Payload Create Fitness',
     type: FitnessDto,
@@ -47,9 +48,8 @@ export class FitnessController {
   @Get()
   @ApiOperation({ summary: 'Find All Fitness' })
   async findAllFitness(@Res() response) {
-    const result = await this.fitnessService.getAllFitness();
-
-    if (!Array.isArray(result) || result.length == 0) {
+    const result = (await this.fitnessService.getAllFitness()).sort(() => Math.random() - 0.5);
+    if (!Array.isArray(result) || result.length < 1) {
       response.status(200).json({
         message: 'Data is Empty',
         statusCode: 200,
@@ -59,7 +59,7 @@ export class FitnessController {
       response.status(200).json({
         message: 'Data Result Successfully',
         statusCode: 200,
-        data: result,
+        data: result
       });
     }
   }
@@ -78,10 +78,10 @@ export class FitnessController {
   }
 
   @Put(':id')
+  @ApiOperation({ summary: 'Update Fitness' })
   @UseInterceptors(FileInterceptor('image'))
   @ApiConsumes('multipart/form-data')
   @ApiParam({ name: 'id' })
-  @ApiOperation({ summary: 'Update Fitness' })
   async updateFitness(
     @Param() params,
     @Body() fitnessDto: UpdateFitnessDto,
@@ -96,8 +96,8 @@ export class FitnessController {
   }
 
   @Get(':id')
-  @ApiParam({ name: 'id' })
   @ApiOperation({ summary: 'Find Fitness By ID' })
+  @ApiParam({ name: 'id' })
   async findFitness(@Param() params, @Res() response) {
     const result = await this.fitnessService.findFitness(params.id);
 
@@ -114,4 +114,28 @@ export class FitnessController {
       });
     }
   }
+
+  // @Get('recommendation')
+  // @ApiOperation({ summary: 'Fitness By Recommendation' })
+  // async fitnessRecommendation(@Res() response) {
+  //   const result = await this.fitnessService.getAllFitness();
+
+  //   console.log({ result })
+
+  //   // const randomData = result[Math.floor(Math.random() * result.length)]
+
+  //   if (!Array.isArray(result) || result.length == 0) {
+  //     response.status(200).json({
+  //       message: 'Data is Empty',
+  //       statusCode: 200,
+  //       data: result,
+  //     });
+  //   } else {
+  //     response.status(200).json({
+  //       message: 'Data Result Successfully',
+  //       statusCode: 200,
+  //       data: result,
+  //     });
+  //   }
+  // }
 }
