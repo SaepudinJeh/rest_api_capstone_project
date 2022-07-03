@@ -21,6 +21,9 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, documentSwagger);
 
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(3000);
+
+  const port: number = parseInt(`${process.env.PORT}`) || 3000;
+
+  await app.listen(port);
 }
 bootstrap();
